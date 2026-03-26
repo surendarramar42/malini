@@ -4,25 +4,29 @@ function answerYes() {
 
 const noBtn = document.getElementById('noBtn');
 
+// Move button anywhere on screen
 function moveButton() {
-    const container = document.querySelector('.container');
-    const maxX = container.clientWidth - noBtn.offsetWidth;
-    const maxY = container.clientHeight - noBtn.offsetHeight;
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
 
-    const randX = Math.floor(Math.random() * maxX);
-    const randY = Math.floor(Math.random() * maxY);
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
 
-    noBtn.style.position = 'absolute';
-    noBtn.style.left = randX + 'px';
-    noBtn.style.top = randY + 'px';
+    noBtn.style.position = "fixed";
+    noBtn.style.left = randX + "px";
+    noBtn.style.top = randY + "px";
 }
 
-// PC
-noBtn.addEventListener('mouseover', moveButton);
+// Run away BEFORE click 😈
+noBtn.addEventListener("mouseover", moveButton);   // PC
+noBtn.addEventListener("touchstart", moveButton);  // Mobile
+noBtn.addEventListener("touchmove", moveButton);   // Extra escape
 
-// Mobile
-noBtn.addEventListener('touchstart', moveButton);
+// Make it move randomly always
+setInterval(moveButton, 500);
 
-// Music
-const music = document.getElementById('bg-music');
-music.volume = 0.3;
+// Extra: prevent click completely
+noBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    moveButton();
+});
